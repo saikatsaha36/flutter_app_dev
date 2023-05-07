@@ -1,11 +1,14 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
 
-import '../widgets/app_bar_icon_button.dart';
+import '../widgets/home/app_bar_icon_button.dart';
+import '../widgets/home/home_carousel_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  // CarouselController _carouselController = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +28,8 @@ class HomeScreen extends StatelessWidget {
               ),
               AppBarIconButton(
                 iconData: Icons.notifications_none,
-                onTap: () {},
+                onTap: () {
+                },
               )
             ],
           ),
@@ -55,8 +59,13 @@ class HomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8)),
                 ),
               ),
+              const SizedBox(
+                height: 16,
+              ),
+              HomeCarouselWidget(),
             ],
           ),
-        ));
+        )
+    );
   }
 }
