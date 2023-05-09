@@ -1,9 +1,15 @@
-import 'package:carousel_slider/carousel_slider.dart';
+// import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
+// import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
+// import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
+// import 'package:ostad_flutter_batch_two/ui/utils/styles.dart';
+import 'package:ostad_flutter_batch_two/ui/widgets/category_card_widget.dart';
 
 import '../widgets/home/app_bar_icon_button.dart';
 import '../widgets/home/home_carousel_widget.dart';
+import '../widgets/home/remarks_title_widget.dart';
+import '../widgets/home/search_text_field.dart';
+import '../widgets/product_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,6 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
           title: Row(
@@ -36,36 +43,135 @@ class HomeScreen extends StatelessWidget {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              TextField(
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.search,
-                onSubmitted: (value) {},
-                decoration: InputDecoration(
-                  fillColor: softGreyColor.withOpacity(0.1),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  filled: true,
-                  hintText: 'Search',
-                  prefixIcon: const Icon(
-                    Icons.search,
-                    color: softGreyColor,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8)),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8)),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SearchTextField(),
+                const SizedBox(
+                  height: 16,
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              HomeCarouselWidget(),
-            ],
+                HomeCarouselWidget(),
+                const SizedBox(
+                  height: 8,
+                ),
+                RemarksTitleWidget(
+                  remarksName: 'Categories',
+                  onTapSeeAll: () {},
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      CategoryCardWidget(
+                          name: 'Computer'
+                      ),
+                      CategoryCardWidget(
+                          name: 'Food'
+                      ),
+                      CategoryCardWidget(
+                          name: 'Cloth'
+                      ),
+                      CategoryCardWidget(
+                          name: 'Gadests'
+                      ),
+                      CategoryCardWidget(
+                          name: 'Inventory'
+                      ),
+                      CategoryCardWidget(
+                          name: 'Phone'
+                      ),
+                      CategoryCardWidget(
+                          name: 'Computer'
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 16,
+                ),
+                RemarksTitleWidget(
+                  remarksName: 'Popular',
+                  onTapSeeAll: () {},
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 16,
+                ),
+                RemarksTitleWidget(
+                  remarksName: 'Special',
+                  onTapSeeAll: () {},
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(
+                  height: 16,
+                ),
+                RemarksTitleWidget(
+                  remarksName: 'New',
+                  onTapSeeAll: () {},
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                      ProductCard(),
+                    ],
+                  ),
+                ),
+
+              ],
+            ),
           ),
         )
     );
   }
 }
+
+
+
+
+
