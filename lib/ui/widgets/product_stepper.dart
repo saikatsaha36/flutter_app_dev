@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/app_colors.dart';
+
 class ProductStepper extends StatefulWidget {
   const ProductStepper({Key? key}) : super(key: key);
 
@@ -10,30 +12,22 @@ class ProductStepper extends StatefulWidget {
 class _ProductStepperState extends State<ProductStepper> {
   int _currentValue = 1;
   final TextEditingController _stepperTEController =
-  TextEditingController(text: '1');
+      TextEditingController(text: '1');
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        SizedBox(
-          width: 50,
-          height: 30,
-          child: ElevatedButton(
-            onPressed: () {
+        stepperButton(
+            onTap: () {
               if (_currentValue > 1) {
                 _currentValue--;
                 _stepperTEController.text = _currentValue.toString();
               }
             },
-            child: const Icon(
-              Icons.remove,
-              size: 16,
-            ),
-          ),
-        ),
+            iconData: Icons.remove),
         SizedBox(
-          width: 30,
+          width: 50,
           height: 30,
           child: TextField(
             controller: _stepperTEController,
@@ -44,26 +38,36 @@ class _ProductStepperState extends State<ProductStepper> {
                 border: OutlineInputBorder(borderSide: BorderSide.none)),
           ),
         ),
-        SizedBox(
-          width: 30,
-          height: 30,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.zero,
-            ),
-            onPressed: () {
-              if (_currentValue < 20) {
-                _currentValue++;
-                _stepperTEController.text = _currentValue.toString();
-              }
-            },
-            child: const Icon(
-              Icons.add,
-              size: 16,
-            ),
-          ),
+        stepperButton(
+          onTap: () {
+            if (_currentValue < 20) {
+              _currentValue++;
+              _stepperTEController.text = _currentValue.toString();
+            }
+          },
+          iconData: Icons.add,
         ),
       ],
+    );
+  }
+
+  Widget stepperButton(
+      {required VoidCallback onTap, required IconData iconData}) {
+    return SizedBox(
+      width: 50,
+      height: 30,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          decoration: BoxDecoration(
+              color: primaryColor, borderRadius: BorderRadius.circular(8)),
+          child: Icon(
+            iconData,
+            size: 16,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 }
