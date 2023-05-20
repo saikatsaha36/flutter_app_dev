@@ -1,9 +1,8 @@
 // import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/email_verification_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
-// import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
-// import 'package:ostad_flutter_batch_two/ui/utils/app_colors.dart';
-// import 'package:ostad_flutter_batch_two/ui/utils/styles.dart';
+
 import 'package:ostad_flutter_batch_two/ui/widgets/category_card_widget.dart';
 import 'package:get/get.dart';
 import '../widgets/home/app_bar_icon_button.dart';
@@ -28,7 +27,9 @@ class HomeScreen extends StatelessWidget {
               const Spacer(),
               AppBarIconButton(
                 iconData: Icons.person,
-                onTap: () {},
+                onTap: () {
+                  Get.to(const EmailVerificationScreen());
+                },
               ),
               AppBarIconButton(
                 iconData: Icons.call,
