@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/otp_verification_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/user_auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/utils/styles.dart';
 import 'package:get/get.dart';
 
@@ -15,54 +16,87 @@ class EmailVerificationScreen extends StatefulWidget {
 }
 
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+  final TextEditingController _emailETController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/logo.png',
-              height: 80,
-              width: 80,
+      body: GetBuilder<UserAuthController>(builder: (authController) {
+        return Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  height: 80,
+                  width: 80,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'Welcome Back',
+                  style: titleTextStyle,
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  'Please Enter Your Email Address',
+                  style: subTitleTextStyle,
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                CommonTextField(
+                  controller: _emailETController,
+                  hintText: 'Email Address',
+                  textInputType: TextInputType.emailAddress,
+                  validator: (String? value) {
+                    if (value?.isEmpty ?? true) {
+                      return 'Enter a valid Email';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                authController.emailVerificationInProgress
+                    ? CircularProgressIndicator()
+                    : CommonElevatedButton(
+                        title: 'Next',
+                        onTap: () async {
+                          if (_formKey.currentState!.validate()) {
+                            final bool response = await authController
+                                .emailVerification(_emailETController.text);
+                            if (response) {
+                              Get.to(OTPVerificationScreen(
+                                email: _emailETController.text,
+                              ));
+                            } else {
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Email Verification failed. Try again!',
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                          }
+                        },
+                      ),
+              ],
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              'Welcome Back',
-              style: titleTextStyle,
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text(
-              'Please Enter Your Email Address',
-              style: subTitleTextStyle,
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            CommonTextField(
-              controller: TextEditingController(),
-              hintText: 'Email Address',
-              textInputType: TextInputType.emailAddress,
-              validator: (String? value) {},
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            CommonElevatedButton(
-              title: 'Next',
-              onTap: () {
-                Get.to(const OTPVerificationScreen());
-              },
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }),
     );
   }
 }
