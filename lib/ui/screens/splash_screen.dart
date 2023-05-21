@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/bottom_nav_bar_screen.dart';
-import 'package:ostad_flutter_batch_two/ui/screens/otp_verification_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/screens/email_verification_screen.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/auth_controller.dart';
 
 import '../utils/app_colors.dart';
 
@@ -15,12 +16,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2)).then((value) {
-      Get.off(const BottomNavBarScreen());
+    Future.delayed(const Duration(seconds: 1)).then((value) async {
+      final bool loginState = await Get.find<AuthController>().isLoggedIn();
+      if (loginState) {
+        Get.off(const BottomNavBarScreen());
+      } else {
+        Get.off(const EmailVerificationScreen());
+      }
     });
   }
 
@@ -48,10 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Text(
                   'Version 1.0',
                   style: TextStyle(
-                    color: greyColor,
-                    fontSize: 12,
-                    letterSpacing: 0.6
-                  ),
+                      color: greyColor, fontSize: 12, letterSpacing: 0.6),
                 ),
               )
             ],
