@@ -1,13 +1,9 @@
-// Analysis: Details - target - deadline -
-// Structure - Layer - Feature - Hexa
-// State management - Getx
-// 1. UI + Functional 2. State management 3. Api integration
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/user_auth_controller.dart';
-
+import 'package:ostad_flutter_batch_two/ui/state_managers/user_profile_controller.dart';
 import 'ui/screens/splash_screen.dart';
 import 'ui/utils/app_colors.dart';
 
@@ -65,6 +61,8 @@ class GetXBindings extends Bindings {
   void dependencies() {
     Get.put(BottomNavigationBarController());
     Get.put(UserAuthController());
+    Get.put(AuthController());
+    Get.put(UserProfileController());
   }
 }
 
