@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/category_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/home_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/user_auth_controller.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/user_profile_controller.dart';
 import 'ui/screens/splash_screen.dart';
@@ -63,6 +65,8 @@ class GetXBindings extends Bindings {
     Get.put(UserAuthController());
     Get.put(AuthController());
     Get.put(UserProfileController());
+    Get.put(HomeController());
+    Get.put(CategoryController());
   }
 }
 

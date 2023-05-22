@@ -3,24 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/email_verification_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/screens/profile_screen.dart';
 import 'package:ostad_flutter_batch_two/ui/state_managers/bottom_navigation_bar_controller.dart';
+import 'package:ostad_flutter_batch_two/ui/state_managers/home_controller.dart';
 
 import 'package:ostad_flutter_batch_two/ui/widgets/category_card_widget.dart';
 import 'package:get/get.dart';
 import '../state_managers/auth_controller.dart';
+import '../state_managers/category_controller.dart';
 import '../widgets/home/app_bar_icon_button.dart';
 import '../widgets/home/home_carousel_widget.dart';
 import '../widgets/home/remarks_title_widget.dart';
 import '../widgets/home/search_text_field.dart';
 import '../widgets/product_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   // CarouselController _carouselController = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
           title: Row(
@@ -46,8 +53,7 @@ class HomeScreen extends StatelessWidget {
               ),
               AppBarIconButton(
                 iconData: Icons.notifications_none,
-                onTap: () {
-                },
+                onTap: () {},
               )
             ],
           ),
@@ -56,12 +62,27 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SearchTextField(),
                 const SizedBox(
                   height: 16,
                 ),
-                HomeCarouselWidget(),
+                GetBuilder<HomeController>(
+                  builder: (homeController) {
+                    if (homeController.getSliderInProgress) {
+                      return const SizedBox(
+                        height: 180,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    return HomeCarouselWidget(
+                      homeSliderModel: homeController.homeSliderModel,
+                    );
+                  },
+                ),
                 const SizedBox(
                   height: 8,
                 ),
@@ -74,36 +95,30 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 8,
                 ),
-
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CategoryCardWidget(
-                          name: 'Computer'
+                GetBuilder<CategoryController>(builder: (categoryController) {
+                  if (categoryController.getCategoryInProgress) {
+                    return const SizedBox(
+                      height: 90,
+                      child: Center(
+                        child: CircularProgressIndicator(),
                       ),
-                      CategoryCardWidget(
-                          name: 'Food'
-                      ),
-                      CategoryCardWidget(
-                          name: 'Cloth'
-                      ),
-                      CategoryCardWidget(
-                          name: 'Gadests'
-                      ),
-                      CategoryCardWidget(
-                          name: 'Inventory'
-                      ),
-                      CategoryCardWidget(
-                          name: 'Phone'
-                      ),
-                      CategoryCardWidget(
-                          name: 'Computer'
-                      ),
-                    ],
-                  ),
-                ),
-
+                    );
+                  }
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: categoryController.categoryModel.categories!
+                          .map(
+                            (e) => CategoryCardWidget(
+                              name: e.categoryName.toString(),
+                              imageUrl: e.categoryImg.toString(),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  );
+                }),
                 const SizedBox(
                   height: 16,
                 ),
@@ -117,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: [
+                    children: const [
                       ProductCard(),
                       ProductCard(),
                       ProductCard(),
@@ -127,7 +142,6 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 const SizedBox(
                   height: 16,
                 ),
@@ -141,7 +155,7 @@ class HomeScreen extends StatelessWidget {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: [
+                    children: const [
                       ProductCard(),
                       ProductCard(),
                       ProductCard(),
@@ -151,7 +165,6 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
                 const SizedBox(
                   height: 16,
                 ),
@@ -165,7 +178,7 @@ class HomeScreen extends StatelessWidget {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: [
+                    children: const [
                       ProductCard(),
                       ProductCard(),
                       ProductCard(),
@@ -175,16 +188,9 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }
-
-
-
-
-
