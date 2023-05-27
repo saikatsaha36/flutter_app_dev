@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../state_managers/bottom_navigation_bar_controller.dart';
 import '../utils/app_colors.dart';
-import '../widgets/product_card.dart';
+
 
 class WishListScreen extends StatelessWidget {
   const WishListScreen({Key? key}) : super(key: key);
@@ -24,14 +24,14 @@ class WishListScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, childAspectRatio: 0.75),
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return const ProductCard();
-        },
-      ),
+      // body: GridView.builder(
+      //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //       crossAxisCount: 3, childAspectRatio: 0.75),
+      //   itemCount: 10,
+      //   itemBuilder: (context, index) {
+      //     return const ProductCard();
+      //   },
+      // ),
     );
   }
 }

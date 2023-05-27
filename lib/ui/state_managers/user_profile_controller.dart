@@ -15,11 +15,10 @@ class UserProfileController extends GetxController {
     final response = await NetworkCaller.getRequest(url: '/ReadProfile');
     _getProfileDataInProgress = false;
     if (response.isSuccess) {
-      final ProfileModel profileModel = ProfileModel.fromJson(response.returnData);
+      final ProfileModel profileModel =
+          ProfileModel.fromJson(response.returnData);
       if (profileModel.data != null) {
         Get.find<AuthController>().saveProfileData(profileModel.data!.first);
-      } else {
-        // Get.to('CompleteProfile');
       }
       update();
       return true;
@@ -29,8 +28,6 @@ class UserProfileController extends GetxController {
     }
   }
 }
-
-
 
 // import 'package:get/get.dart';
 // import 'package:ostad_flutter_batch_two/data/models/profile_model.dart';

@@ -9,6 +9,7 @@ import 'package:ostad_flutter_batch_two/ui/widgets/category_card_widget.dart';
 import 'package:get/get.dart';
 import '../state_managers/auth_controller.dart';
 import '../state_managers/category_controller.dart';
+import '../state_managers/product_by_remark_controller.dart';
 import '../widgets/home/app_bar_icon_button.dart';
 import '../widgets/home/home_carousel_widget.dart';
 import '../widgets/home/remarks_title_widget.dart';
@@ -113,6 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             (e) => CategoryCardWidget(
                               name: e.categoryName.toString(),
                               imageUrl: e.categoryImg.toString(),
+                                id: e.id ?? 0
                             ),
                           )
                           .toList(),
@@ -129,19 +131,45 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: const [
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                    ],
-                  ),
-                ),
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(
+                //     children: const [
+                //       ProductCard(),
+                //       ProductCard(),
+                //       ProductCard(),
+                //       ProductCard(),
+                //       ProductCard(),
+                //       ProductCard(),
+                //     ],
+                //   ),
+                // ),
+                GetBuilder<ProductByRemarkController>(
+                    builder: (productByRemarkController) {
+                  if (productByRemarkController
+                      .getPopularProductByRemarkInProgress) {
+                    return const SizedBox(
+                      height: 90,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: productByRemarkController
+                          .popularProductsModel.products!
+                          .map(
+                            (product) => ProductCard(
+                              product: product,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  );
+                }),
                 const SizedBox(
                   height: 16,
                 ),
@@ -152,19 +180,46 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: const [
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                    ],
-                  ),
-                ),
+
+                GetBuilder<ProductByRemarkController>(
+                    builder: (productByRemarkController) {
+                      if (productByRemarkController.getPopularProductByRemarkInProgress) {
+                        return const SizedBox(
+                          height: 90,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+                      return SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children:
+                          productByRemarkController.newProductsModel.products!
+                              .map(
+                                (product) => ProductCard(
+                              product: product,
+                            ),
+                          )
+                              .toList(),
+                        ),
+                      );
+                    }),
+
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.horizontal,
+                //   child: Row(
+                //     children: const [
+                //       ProductCard(),
+                //       ProductCard(),
+                //       ProductCard(),
+                //       ProductCard(),
+                //       ProductCard(),
+                //       ProductCard(),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(
                   height: 16,
                 ),
@@ -179,12 +234,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: const [
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
-                      ProductCard(),
+                      // ProductCard(),
+                      // ProductCard(),
+                      // ProductCard(),
+                      // ProductCard(),
+                      // ProductCard(),
+                      // ProductCard(),
                     ],
                   ),
                 ),

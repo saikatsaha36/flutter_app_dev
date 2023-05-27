@@ -50,6 +50,7 @@ class CategoryScreen extends StatelessWidget {
                     return CategoryCardWidget(
                       name: category.categoryName.toString(),
                       imageUrl: category.categoryImg.toString(),
+                      id: category.id!,
                     );
                   }),
             );
